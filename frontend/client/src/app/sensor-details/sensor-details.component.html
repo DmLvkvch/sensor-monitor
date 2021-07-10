@@ -1,0 +1,47 @@
+<form [formGroup]="profileForm">
+
+    <div>
+        <label>Name: </label>
+        <input id="name" type="text" formControlName="name" [(ngModel)]="sensor.name">
+    </div>
+    
+    <div>
+        <label>Type: </label>
+        <select formControlName="type">
+            <option *ngFor="let type of types" [ngValue]="type" [selected]="type.id===sensor.type?.id">
+                {{ type.name }}
+            </option>
+        </select>
+    </div>
+    <div>
+        <label>Unit: </label>
+        <select formControlName="unit">
+            <option *ngFor="let unit of units" [ngValue]="unit" [selected]="unit.id===sensor.unit?.id">
+                {{ unit.name }}
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <form formGroupName="range">
+            <label>Range: </label>
+            <input id="range_to" type="number" formControlName="from" [(ngModel)]="sensor.range.from">
+            <input id="range_from" type="number" formControlName="to" [(ngModel)]="sensor.range.to">
+    </form>
+    </div>
+
+    <div>
+        <label>Model: </label>
+        <input id="model" type="text" formControlName="model" [(ngModel)]="sensor.model">
+    </div>
+    <div>
+        <label>Location: </label>
+        <input id="location" type="text" formControlName="location" [(ngModel)]="sensor.location">
+    </div>
+    <div>
+        <label>Description: </label>
+        <input id="description" type="text" formControlName="description" [(ngModel)]="sensor.description">
+    </div>
+    <button (click)="onSubmit()" type="submit" class="btn btn-success">Submit</button>
+    <button (click)="onCancel()" type="submit" class="btn btn-success">Cancel</button>
+  </form>

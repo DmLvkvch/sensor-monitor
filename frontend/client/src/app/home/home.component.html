@@ -1,0 +1,44 @@
+﻿<div class="col-md-6 col-md-offset-3">
+    <p><a [routerLink]="['/login']" (click) ="logout()">Logout</a></p>
+
+    <form class="form-inline md-form mr-auto mb-4">
+      <input #search class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button (click)="onSearchClicked(search.value)" mdbBtn size="sm" gradient="aqua" rounded="true" class="my-0 waves-light" mdbWavesEffect type="submit">Search</button>
+    </form>
+
+        <div class="card-body">
+          <table *ngIf="sensors" class="table table-bordered table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th></th>
+                <th scope="col">name</th>
+                <th scope="col">model</th>
+                <th scope="col">type</th>
+                <th scope="col">range</th>
+                <th scope="col">unit</th>
+                <th scope="col">location</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sensor of sensors">
+                <button (click)="onEdit(sensor.id, content)">Edit</button>
+                <td>{{ sensor.name }}</td>
+                <td>{{ sensor.model }}</td>
+                <td>{{ sensor.type.name }}</td>
+                <td>{{ sensor.range.from }}-{{sensor.range.to}}</td>
+                <td>{{ sensor.unit.name }}</td>
+                <td>{{ sensor.location }}</td>
+                <button (click)="onDelete(sensor.id)">delete</button>
+                <pagination-controls previousLabel="Previous" nextLabel="Next" (pageChange)="p = $event"></pagination-controls>
+              </tr>
+            </tbody>
+          </table>
+          <button (click)="onEdit(0, content)">Add sensor</button>
+        </div>
+        <ng-template #content let-modal>
+            <div style="width: 400px;">
+                <app-sensor-details [id]="id" (onClose)="modalClosed($event)"></app-sensor-details>
+            </div>
+        </ng-template>
+        </div>
