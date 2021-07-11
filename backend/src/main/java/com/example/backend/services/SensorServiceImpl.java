@@ -29,7 +29,17 @@ public class SensorServiceImpl implements SensorService {
 
     @Override
     public void update(Sensor sensor) {
-        sensorRepository.update(sensor);
+        if(valid(sensor)) sensorRepository.update(sensor);
+    }
+
+    private boolean valid(Sensor sensor) {
+        boolean validName = (!sensor.getName().equals("") || sensor.getName()!=null) && sensor.getName().length()<=30;
+        boolean validModel = (!sensor.getModel().equals("") || sensor.getModel()!=null) && sensor.getModel().length()<=15;
+        boolean validLocation = sensor.getLocation().length()<=40;
+        boolean validDescription = sensor.getLocation().length()<=200;
+        boolean validRange= sensor.getRange().getFrom()<sensor.getRange().getTo();
+        return validName && validModel && validLocation && validDescription && validRange;
+
     }
 
     @Override
@@ -39,7 +49,7 @@ public class SensorServiceImpl implements SensorService {
 
     @Override
     public void add(Sensor sensor) {
-        sensorRepository.save(sensor);
+        if(valid(sensor)) sensorRepository.save(sensor);
     }
 
     private Info buildPageInfo(int page, long pageCount) {

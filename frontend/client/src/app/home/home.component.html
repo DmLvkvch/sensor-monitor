@@ -22,9 +22,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let sensor of sensors">
+        <tr *ngFor="let sensor of sensors;">
           <button (click)="onEdit(sensor.id, content)">Edit</button>
-          <td>{{ sensor.name }}</td>
+          <td mat-raised-button #tooltip="matTooltip"
+          matTooltip="Info about the action" >{{ sensor.name }}</td>
           <td>{{ sensor.model }}</td>
           <td>{{ sensor.type.name }}</td>
           <td>{{ sensor.range.from }}-{{sensor.range.to}}</td>

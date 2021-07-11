@@ -11,11 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { SensorService } from './home/sensor.service';
 import { LoginComponent } from './login/login.component';
 import { SensorDetailsComponent } from './sensor-details/sensor-details.component';
-
-
-
-;
-;
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     imports: [
@@ -26,6 +22,7 @@ import { SensorDetailsComponent } from './sensor-details/sensor-details.componen
         NgbModule,
         ReactiveFormsModule,
         MatPaginatorModule,
+        MatTooltipModule,
         routing
     ],
     declarations: [

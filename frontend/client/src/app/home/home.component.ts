@@ -1,9 +1,10 @@
-﻿import { Component, OnInit, ViewChild } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { SensorService } from './sensor.service';
 import { PageInfo, Sensor } from './sensor.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip'; 
 
 @Component({
     selector: 'home',
@@ -28,6 +29,10 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.getSensors()
+    }
+
+    trackByFn = (index: number, item: any)=>{
+        return item.id;
     }
 
     getSensors(page: number = 1) {
@@ -58,6 +63,7 @@ export class HomeComponent implements OnInit {
             this.sensors = JSON.parse(result.toString())['results'];
             let tmp = JSON.parse(result.toString())['info'];
             this.buildPage(tmp)
+            this.page.currentPage = 0;
         });
     }
 
