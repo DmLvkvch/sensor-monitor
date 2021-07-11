@@ -1,6 +1,6 @@
 # sensor-monitor
 
-1. open frontend/client dir
+1. open frontend/client folder
 2. npm install
 3. ng serve
 4. http://localhost:4200
