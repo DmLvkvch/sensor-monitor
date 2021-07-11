@@ -13,7 +13,7 @@ export class Sensor {
 }
 
 export class PageInfo {
-  constructor(public page: number, public pageSize: number, public itemsCount: number) { }
+  constructor(public next: string, public prev: string, public pages: number, public count: string) { }
 }
 
 export class SensorRange {

@@ -24,8 +24,8 @@ export class SensorService {
     return this.http.get<Sensor>(this.sensorsUrl + '/' + id, { headers: this.headers, responseType: 'text' as 'json' });
   }
 
-  public getSensorBySearch(text: string): Observable<Object> {
-    return this.http.get<Object>(this.sensorsUrl + '?' + 'search=' + text, { headers: this.headers, responseType: 'text' as 'json' });
+  public getSensorBySearch(page: number = 1, text: string=""): Observable<Object> {
+    return this.http.get<Object>(this.sensorsUrl + '?page=' + page + '&search=' + text, { headers: this.headers, responseType: 'text' as 'json' });
   }
 
   public deleteSensor(id: number): Observable<Object> {

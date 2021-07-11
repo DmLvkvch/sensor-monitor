@@ -3,7 +3,7 @@
 
   <form class="form-inline md-form mr-auto mb-4">
     <input #search class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-    <button (click)="onSearchClicked(search.value)" mdbBtn size="sm" gradient="aqua" rounded="true"
+    <button (click)="onSearchClicked(1, search.value)" mdbBtn size="sm" gradient="aqua" rounded="true"
       class="my-0 waves-light" mdbWavesEffect type="submit">Search</button>
   </form>
 
@@ -36,6 +36,9 @@
     </table>
   </div>
   <div>
+    <mat-paginator #paginator [pageSize]="page.size" [showFirstLastButtons]="true" [length]="page.count"
+      [pageIndex]="page.currentPage" (page)="pageEvent = handlePage($event)">
+    </mat-paginator>
     <button (click)="onEdit(0, content)">Add sensor</button>
   </div>
   <ng-template #content let-modal>

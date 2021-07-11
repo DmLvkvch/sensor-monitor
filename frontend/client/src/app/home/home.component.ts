@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
 
     public search: string;
 
-    public page: PageInfo;
+    public page: any = {count: 0, size: 4, currentPage: 0}
 
     pageEvent: PageEvent;
 
@@ -31,14 +31,18 @@ export class HomeComponent implements OnInit {
     }
 
     getSensors(page: number = 1) {
-        this.sensorService.findAll().subscribe((data) => {
+        this.sensorService.getSensorBySearch(page, this.search).subscribe((data) => {
             this.sensors = JSON.parse(data.toString())['results'];
             let tmp = JSON.parse(data.toString())['info'];
-            let curPage = 1;
+            this.buildPage(tmp)
         }, error=>{
             this.logout()
         }
         );
+    }
+
+    buildPage(info: PageInfo){
+        this.page.count = info.count;
     }
 
     onCreate(content) {
@@ -48,9 +52,12 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    onSearchClicked(value: string) {
-        this.sensorService.getSensorBySearch(value).subscribe(result => {
+    onSearchClicked(page = 1, value: string) {
+        this.search = value
+        this.sensorService.getSensorBySearch(page, this.search).subscribe(result => {
             this.sensors = JSON.parse(result.toString())['results'];
+            let tmp = JSON.parse(result.toString())['info'];
+            this.buildPage(tmp)
         });
     }
 
@@ -64,7 +71,7 @@ export class HomeComponent implements OnInit {
         this.id = id;
         this.modalService.open(content).result.then((res) => { },
             (res) => {
-            });
+        });
     }
 
     logout() {
@@ -72,13 +79,14 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['login']);
     }
 
-    public getServerData(event?: PageEvent) {
-        this.getSensors(event.pageIndex)
+    public handlePage(event?: PageEvent) {
+        this.page.currentPage = event.pageIndex
+        this.getSensors(event.pageIndex+1)
         return event;
     }
 
     modalClosed(isUpdated) {
-        this.getSensors()
+        this.getSensors(this.page.currentPage+1)
         this.modalService.dismissAll()
     }
 }
