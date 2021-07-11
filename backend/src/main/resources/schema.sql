@@ -33,7 +33,9 @@ create table SENSORS
     range_to       integer,
     sensor_type_id integer not null,
     sensor_unit_id integer not null,
-    primary key (id)
+    primary key (id),
+    foreign key (sensor_unit_id) references SENSOR_UNITS,
+    foreign key (sensor_type_id) references SENSOR_TYPES
 );
 create table USERS
 (
@@ -47,21 +49,7 @@ create table users_roles
 (
     role_id integer,
     user_id bigint not null,
-    primary key (user_id)
+    primary key (user_id),
+    foreign key (role_id) references ROLES,
+    foreign key (user_id) references USERS
 );
-alter table ROLES
-    add constraint UK_1s6p3xpt8owdb603jky0mo815 unique (name);
-alter table SENSOR_TYPES
-    add constraint UK_bk5l9p9kl2wr5qnqmtvbpv77t unique (name);
-alter table SENSOR_UNITS
-    add constraint UK_5fpuqxb6kacaymp796tukw2uy unique (name);
-alter table USERS
-    add constraint UK_dc4eq7plr20fdhq528twsak1b unique (username);
-alter table SENSORS
-    add constraint FKbnrhiu15bd6vhkjxja1tbalrs foreign key (sensor_type_id) references SENSOR_TYPES;
-alter table SENSORS
-    add constraint FKneeq4vqntgxxreo15uop5qc5q foreign key (sensor_unit_id) references SENSOR_UNITS;
-alter table users_roles
-    add constraint FKh9bs29w8mwo0yc2o3xi7me0nq foreign key (role_id) references ROLES;
-alter table users_roles
-    add constraint FKn9697al5cfs6rqy40ft93wgc5 foreign key (user_id) references USERS;

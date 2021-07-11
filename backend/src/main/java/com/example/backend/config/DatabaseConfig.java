@@ -71,4 +71,4 @@ public class DatabaseConfig {
         return transactionManager;
     }
 
-} // class DatabaseConfig
+}

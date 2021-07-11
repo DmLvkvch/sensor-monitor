@@ -15,6 +15,7 @@ import java.util.List;
 public class SensorRepositoryImpl implements SensorRepository {
 
     private final int pageSize = 4;
+
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -23,13 +24,15 @@ public class SensorRepositoryImpl implements SensorRepository {
     }
 
     @Override
-    public long getCount() {
-        String countQ = "Select count (f.id) from Sensor f";
-        Query countQuery = getSession().createQuery(countQ);
-        return (long) ((Long) countQuery.uniqueResult());
+    public long getCount(String pattern) {
+        if (pattern == null || pattern.equals("")) {
+            String countQ = "Select count (f.id) from Sensor f";
+            Query countQuery = getSession().createQuery(countQ);
+            return (long) ((Long) countQuery.uniqueResult());
+        }
+        return getCountByFilter(pattern);
     }
 
-    @Override
     public long getCountByFilter(String pattern) {
         Query countQuery = getSession().createQuery("Select count (o.id) from Sensor o where o.type.name LIKE CONCAT('%',:pattern,'%')  " +
                 "or o.unit.name LIKE CONCAT('%',:pattern,'%') or o.model LIKE CONCAT('%',:pattern,'%') " +
@@ -52,11 +55,14 @@ public class SensorRepositoryImpl implements SensorRepository {
 
 
     @Override
-    public List<Sensor> findAll(int page) {
-        return getSession().createQuery("select p from Sensor p", Sensor.class)
-                .setFirstResult((page - 1) * pageSize)
-                .setMaxResults(pageSize)
-                .getResultList();
+    public List<Sensor> findAll(int page, String pattern) {
+        if (pattern == null || pattern.equals("")) {
+            List<Sensor> select_p_from_sensor_p = getSession().createQuery("select p from Sensor p", Sensor.class)
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        }
+        return findByFilter(page, pattern);
     }
 
     @Override
@@ -74,7 +80,6 @@ public class SensorRepositoryImpl implements SensorRepository {
                 .executeUpdate();
     }
 
-    @Override
     public List<Sensor> findByFilter(int page, String pattern) {
         Query<Sensor> q = getSession().createQuery("Select o from Sensor o where " +
                 "o.type.name LIKE CONCAT('%',:pattern,'%')  " +

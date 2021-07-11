@@ -5,5 +5,5 @@ import com.example.backend.data.entities.SensorUnit;
 import java.util.List;
 
 public interface UnitService {
-    List<SensorUnit> getAllUnits();
+    List<SensorUnit> getData();
 }

@@ -16,27 +16,26 @@ public class SensorApiController {
     @GetMapping("")
     public SensorPage getSensorPage(@RequestParam(name = "page", required = false, defaultValue = "1") int page,
                                     @RequestParam(name = "search", required = false, defaultValue = "") String searchPattern) {
-        return sensorService.getSensorsByPage(page, searchPattern);
+        return sensorService.getDataByPage(page, searchPattern);
     }
 
     @GetMapping("{id}")
-    public Sensor getSensorDetails(@PathVariable(name = "id") Long id) {
-        return sensorService.getSensorDetails(id);
+    public Sensor getDetails(@PathVariable(name = "id") Long id) {
+        return sensorService.getDetails(id);
     }
 
     @PostMapping("")
-    public void updateSensor(@RequestBody Sensor sensor) {
-        System.out.println(sensor);
-        sensorService.updateSensor(sensor);
+    public void update(@RequestBody Sensor sensor) {
+        sensorService.update(sensor);
     }
 
     @DeleteMapping("{id}")
-    public void deleteSensor(@PathVariable(name = "id") Long id) {
-        sensorService.deleteSensor(id);
+    public void delete(@PathVariable(name = "id") Long id) {
+        sensorService.delete(id);
     }
 
     @PutMapping("")
-    public void addSensor(@RequestBody Sensor sensor) {
-        sensorService.addSensor(sensor);
+    public void add(@RequestBody Sensor sensor) {
+        sensorService.add(sensor);
     }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Sensor, SensorRange, SensorType, SensorUnit } from '../home/sensor.model';
+import { Sensor, SensorType, SensorUnit } from '../home/sensor.model';
 import { SensorService } from '../home/sensor.service';
 
 @Component({
@@ -21,12 +21,9 @@ export class SensorDetailsComponent implements OnInit {
   @Output()
   onClose: EventEmitter<boolean> = new EventEmitter();
 
-  @Output()
-  onUpdate: EventEmitter<boolean> = new EventEmitter();
-
   constructor(private sensorService: SensorService) {
     this.sensor = new Sensor()
-   }
+  }
 
   profileForm = new FormGroup({
     name: new FormControl(''),
@@ -42,44 +39,54 @@ export class SensorDetailsComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.sensorService.getUnits().subscribe(result=>{
+    this.sensorService.getUnits().subscribe(result => {
       this.units = JSON.parse(result.toString())
       this.profileForm.patchValue({
         unit: this.sensor.unit
       })
     })
 
-    this.sensorService.getTypes().subscribe(result=>{
+    this.sensorService.getTypes().subscribe(result => {
       this.types = JSON.parse(result.toString())
       this.profileForm.patchValue({
         type: this.sensor.type
       })
     })
-    if(this.id===0){
-        this.sensor = new Sensor()
-    }else{
-        this.sensorService.getSensor(this.id).subscribe(result => { 
-            this.sensor = JSON.parse(result.toString());
-            this.profileForm.patchValue({
-              type: this.sensor.type
-            })
-            this.profileForm.patchValue({
-              unit: this.sensor.unit
-            })
+    if (this.id === 0) {
+      this.sensor = new Sensor()
+    } else {
+      this.sensorService.getSensor(this.id).subscribe(result => {
+        this.sensor = JSON.parse(result.toString());
+        this.profileForm.patchValue({
+          type: this.sensor.type
         })
+        this.profileForm.patchValue({
+          unit: this.sensor.unit
+        })
+      })
     }
-  } 
-  onSubmit(){
+  }
+  onSubmit() {
     let updatedSensor = this.profileForm.value
     updatedSensor.id = this.id
     console.log(updatedSensor)
-    this.sensorService.updateSensor(updatedSensor).subscribe(result => { 
-      this.onClose.emit(true)
-    })
-  }
-
-  onCancel(){
-    this.closeModal()
+    if (updatedSensor.id === 0) {
+      this.sensorService.addSensor(updatedSensor).subscribe(result => {
+        this.onClose.emit(true)
+      }, error=>{
+        if(error.status===403){
+          alert("Forbidden")
+        }
+      })
+    } else {
+      this.sensorService.updateSensor(updatedSensor).subscribe(result => {
+        this.onClose.emit(true)
+      }, error=>{
+        if(error.status===403){
+          alert("Forbidden")
+        }
+      })
+    }
   }
 
   closeModal() {

@@ -14,7 +14,7 @@ public class TypeServiceImpl implements TypeService {
     private SensorTypeRepository typeRepository;
 
     @Override
-    public List<SensorType> getAll() {
+    public List<SensorType> getData() {
         return typeRepository.findAll();
     }
 }

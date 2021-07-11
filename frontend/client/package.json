@@ -1,10 +1,6 @@
 {
   "name": "angular-frontend",
   "version": "0.0.0",
-  "build": "npm build",
-  "clean": "rm -rf node_modules", 
-  "reinstall": "npm run clean && npm install", 
-  "rebuild": "npm run clean && npm install && npm run build",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

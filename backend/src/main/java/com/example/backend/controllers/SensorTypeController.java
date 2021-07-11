@@ -17,6 +17,6 @@ public class SensorTypeController {
 
     @GetMapping("")
     public List<SensorType> getUnits() {
-        return typeService.getAll();
+        return typeService.getData();
     }
 }

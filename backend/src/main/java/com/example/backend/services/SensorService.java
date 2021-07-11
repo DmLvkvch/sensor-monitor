@@ -5,15 +5,13 @@ import com.example.backend.data.entities.SensorPage;
 
 public interface SensorService {
 
-    SensorPage getSensorsByPage(int page, String pattern);
+    SensorPage getDataByPage(int page, String pattern);
 
-    Sensor getSensorDetails(Long id);
+    Sensor getDetails(Long id);
 
-    void updateSensor(Sensor sensor);
+    void update(Sensor sensor);
 
-    void deleteSensor(Long id);
+    void delete(Long id);
 
-    void addSensor(Sensor sensor);
-
-    SensorPage getSensorsByFilter(int page, String pattern);
+    void add(Sensor sensor);
 }

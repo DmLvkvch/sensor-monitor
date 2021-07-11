@@ -6,20 +6,16 @@ import java.util.List;
 
 public interface SensorRepository {
 
-    long getCount();
-
-    long getCountByFilter(String pattern);
+    long getCount(String pattern);
 
     void save(Sensor sensor);
 
     void update(Sensor sensor);
 
-    List<Sensor> findAll(int page);
+    List<Sensor> findAll(int page, String pattern);
 
     Sensor findById(Long id);
 
     void deleteById(Long id);
-
-    List<Sensor> findByFilter(int page, String pattern);
 
 }

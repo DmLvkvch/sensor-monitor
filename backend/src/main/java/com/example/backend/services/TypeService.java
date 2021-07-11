@@ -5,5 +5,5 @@ import com.example.backend.data.entities.SensorType;
 import java.util.List;
 
 public interface TypeService {
-    List<SensorType> getAll();
+    List<SensorType> getData();
 }

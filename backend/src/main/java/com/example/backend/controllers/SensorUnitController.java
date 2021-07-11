@@ -17,6 +17,6 @@ public class SensorUnitController {
 
     @GetMapping("")
     public List<SensorUnit> getUnits() {
-        return unitService.getAllUnits();
+        return unitService.getData();
     }
 }

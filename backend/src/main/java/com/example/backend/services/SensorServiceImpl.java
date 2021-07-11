@@ -16,41 +16,30 @@ public class SensorServiceImpl implements SensorService {
     private final int pageSize = 4;
 
     @Override
-    public SensorPage getSensorsByPage(int page, String pattern) {
-        if (pattern == null || pattern.equals("")) {
-            long count = sensorRepository.getCount();
-            Info info = buildPageInfo(page, count);
-            return new SensorPage(info, sensorRepository.findAll(page));
-        }
-        return getSensorsByFilter(page, pattern);
+    public SensorPage getDataByPage(int page, String pattern) {
+        long count = sensorRepository.getCount(pattern);
+        Info info = buildPageInfo(page, count);
+        return new SensorPage(info, sensorRepository.findAll(page, pattern));
     }
 
     @Override
-    public Sensor getSensorDetails(Long id) {
+    public Sensor getDetails(Long id) {
         return sensorRepository.findById(id);
     }
 
     @Override
-    public void updateSensor(Sensor sensor) {
+    public void update(Sensor sensor) {
         sensorRepository.update(sensor);
     }
 
     @Override
-    public void deleteSensor(Long id) {
+    public void delete(Long id) {
         sensorRepository.deleteById(id);
     }
 
     @Override
-    public void addSensor(Sensor sensor) {
+    public void add(Sensor sensor) {
         sensorRepository.save(sensor);
-    }
-
-    @Override
-    public SensorPage getSensorsByFilter(int page, String pattern) {
-        long count = sensorRepository.getCountByFilter(pattern);
-        Info info = buildPageInfo(page, count);
-        var sensorsByFilter = sensorRepository.findByFilter(page, pattern);
-        return new SensorPage(info, sensorsByFilter);
     }
 
     private Info buildPageInfo(int page, long pageCount) {

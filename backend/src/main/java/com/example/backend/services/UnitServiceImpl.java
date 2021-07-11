@@ -14,7 +14,7 @@ public class UnitServiceImpl implements UnitService {
     private SensorUnitRepository unitRepository;
 
     @Override
-    public List<SensorUnit> getAllUnits() {
+    public List<SensorUnit> getData() {
         return unitRepository.findAll();
     }
 }

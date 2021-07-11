@@ -4,7 +4,7 @@
         <label>Name: </label>
         <input id="name" type="text" formControlName="name" [(ngModel)]="sensor.name">
     </div>
-    
+
     <div>
         <label>Type: </label>
         <select formControlName="type">
@@ -27,7 +27,7 @@
             <label>Range: </label>
             <input id="range_to" type="number" formControlName="from" [(ngModel)]="sensor.range.from">
             <input id="range_from" type="number" formControlName="to" [(ngModel)]="sensor.range.to">
-    </form>
+        </form>
     </div>
 
     <div>
@@ -43,5 +43,5 @@
         <input id="description" type="text" formControlName="description" [(ngModel)]="sensor.description">
     </div>
     <button (click)="onSubmit()" type="submit" class="btn btn-success">Submit</button>
-    <button (click)="onCancel()" type="submit" class="btn btn-success">Cancel</button>
-  </form>
+    <button (click)="closeModal()" type="submit" class="btn btn-success">Cancel</button>
+</form>
